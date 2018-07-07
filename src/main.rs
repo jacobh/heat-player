@@ -6,9 +6,11 @@ extern crate relm;
 #[macro_use]
 extern crate relm_derive;
 
-use gtk::WidgetExt;
+use gtk::{ContainerExt, GtkWindowExt, WidgetExt};
 
-use relm::{Relm, Update, Widget};
+use relm::{Component, Relm, Update, Widget};
+
+mod folder_chooser;
 
 struct Model;
 
@@ -17,8 +19,13 @@ enum Msg {
     Quit,
 }
 
+struct Widgets {
+    folder_chooser: Component<folder_chooser::FolderChooser>,
+}
+
 struct Win {
     window: gtk::Window,
+    widgets: Widgets,
 }
 
 impl Update for Win {
@@ -46,6 +53,10 @@ impl Widget for Win {
     fn view(relm: &Relm<Self>, _model: Self::Model) -> Self {
         let window = gtk::Window::new(gtk::WindowType::Toplevel);
 
+        let folder_chooser = relm::init::<folder_chooser::FolderChooser>(()).unwrap();
+
+        window.add(folder_chooser.widget());
+
         connect!(
             relm,
             window,
@@ -53,9 +64,13 @@ impl Widget for Win {
             return (Some(Msg::Quit), gtk::Inhibit(false))
         );
 
+        window.resize(800, 500);
         window.show_all();
 
-        Win { window }
+        Win {
+            window,
+            widgets: Widgets { folder_chooser },
+        }
     }
 }
 
