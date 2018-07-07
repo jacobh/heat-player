@@ -1,0 +1,6 @@
+[package]
+name = "heat_player"
+version = "0.1.0"
+authors = ["Jacob Haslehurst <jacob@haslehurst.net>"]
+
+[dependencies]
