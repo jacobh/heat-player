@@ -4,9 +4,5 @@ version = "0.1.0"
 authors = ["Jacob Haslehurst <jacob@haslehurst.net>"]
 
 [dependencies]
-gtk = "0.4.1"
-relm = "0.14.6"
-relm-derive = "0.14.6"
-
-[features]
-default = ["relm/unstable", "relm-derive/unstable"]
+iui = "0.3.0"
+tinyfiledialogs = "3.3.5"
